@@ -1,7 +1,9 @@
 import React, {useState, useEffect} from 'react'
 
 import {Box, Heading, Button, Image, Flex} from "@chakra-ui/react"
+import {Link as RouterLink} from "react-router-dom"
 import ToggleMode from './ToggleMode.js'
+import Layout from './Layout.js'
 
 import io from 'socket.io-client'
 const socket = io.connect("http://localhost:3001")
@@ -17,28 +19,21 @@ function Home() {
   useEffect(()=>{
     socket.on("receive_message", (arg)=>{
       alert(arg.message)
-    })
-
-  }, [socket])
+  })}, [socket])
 
   return (
-    <Box h="100vh">
+    <Layout>
 
-        {/* Remainder of the Layout */}
-        <Flex h="95vh" w="100%" alignItems="center" flexDirection="column">
-            <Heading mt="30vh" size="2xl">ghost</Heading>
-            <Heading mt="5vh" size="1xl">popular word game – now online and multiplayer!</Heading>
-            <Flex>
-                <Button m="3vh">singleplayer</Button>
-                <Button m="3vh" onClick={sendMessage}>multiplayer</Button>
-            </Flex>
-        </Flex>
-
-        {/* Toggle Theme Button */}
-        <Box h="5vh" w="100%" alignItems="center" justifyContent="right">
-            <ToggleMode/>
-        </Box>
-    </Box>
+      {/* Every page must SIT IN A FLEXBOX OF VH 95 */}
+      <Flex h="95vh" w="100%" alignItems="center" flexDirection="column">
+          <Heading mt="30vh" size="2xl">ghost</Heading>
+          <Heading mt="5vh" size="1xl">popular word game – now online and multiplayer!</Heading>
+          <Flex>
+              <Button m="3vh" as={RouterLink} to="/singleplayer">singleplayer</Button>
+              <Button m="3vh" onClick={sendMessage}>multiplayer</Button>
+          </Flex>
+      </Flex>
+    </Layout>
   )
 }
 
