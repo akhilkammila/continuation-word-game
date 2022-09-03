@@ -21,13 +21,18 @@ const io = new Server(server, {
 io.on("connection", (socket) => {
     console.log(`Client connected: ${socket.id}`)
 
-    // GETTING the send_message event FROM A CLIENT
-    socket.on("send_message", (arg) =>{
-        console.log(arg)
-
-        // BROADCAST event BACK TO EVERY CLIENT
-        socket.broadcast.emit("receive_message", arg)
+    // LISTENS for a socket trying to join a room, then CONNECTS IT to the room
+    socket.on("join_room", (data) =>{
+        console.log('socket is joining a room')
+        socket.join(data)
     })
+
+    // LISTENS for a socket sending a message, then emits to ALL SOCKETS IN THE ROOM
+    socket.on("send_message", (data)=>{
+        console.log(data.room)
+        socket.to(data.room).emit("receive_message", data)
+    })
+
 })
 
 // just confirms that server is running

@@ -1,35 +1,56 @@
 import React, {useState} from 'react'
 
-import {Box, Heading, Button, Image, Flex, Input} from "@chakra-ui/react"
+import {Box, Heading, Button, Image, Flex, Input, useToast} from "@chakra-ui/react"
 import {Link as RouterLink} from "react-router-dom"
-import ToggleMode from './ToggleMode.js'
 import Layout from './Layout.js'
-import Singleplayer from './Singleplayer.js'
+import Multiplayer from './Multiplayer.js'
+
+import io from 'socket.io-client'
+const socket = io.connect("http://localhost:3001")
 
 const MultiPlayerSelector= () => {
-    const [name, setName] = useState('Player ' + Math.floor(Math.random() * 1000))
-    const [room, setRoom] = useState('Player ' + Math.floor(Math.random() * 1000))
+    const toast = useToast()
 
-    function createRoom(e){
-        console.log('creating room')
+    const defaultName = 'Player ' + Math.floor(Math.random() * 1000)
+    const [name, setName] = useState('')
+    const [room, setRoom] = useState('')
+    const [inRoom, setInRoom] = useState(false)
+
+
+    function joinRoom(){
+        console.log('creating / joining room')
+        if(room==""){
+            toast({
+                title: 'Failed Creating Room',
+                description: 'enter a room code',
+                status: 'error',
+                duration: 3000,
+                position: 'top',
+                isClosable: true,
+            })
+            return
+        }
+
+        if(name==""){
+            setName(defaultName)
+        }
+        
+        socket.emit("join_room", room)
+
+        setInRoom(true)
     }
 
-    function joinRoom(e){
-        console.log('joining room')
-    }
-
-    return (
+    if(!inRoom) return (
         <Layout>
             {/* Every page must SIT IN A FLEXBOX OF VH 95 */}
             <Flex h="95vh" w="100%" alignItems="center" flexDirection="column" justifyContent="center">
                 <Flex h="80vh" justifyContent="center" alignItems="center" flexDirection="column">
                     <Heading>multiplayer menu</Heading>
                     <Flex mt="3vh" flexDirection="column" alignItems="center">
-                        <Input m="1vh" onChange={(e)=> setName(e.currentTarget.value)} placeholder={"Enter Name (default: " + name + " )"}></Input>
-                        <Input m="1vh" onChange={(e)=> setRoom(e.currentTarget.value)} placeholder="Create / Join Room Code"></Input>
+                        <Input w="50vh" m="1vh" onChange={(e)=> setName(e.currentTarget.value)} placeholder={"Enter Name (default: " + defaultName + " )"}></Input>
+                        <Input w="50vh" m="1vh" onChange={(e)=> setRoom(e.currentTarget.value)} placeholder="Room Code (if creating a room, enter any code)"></Input>
                         <Flex alignItems="center">
-                            <Button m="1vh" onClick={createRoom}>Create Room</Button>
-                            <Button m="1vh" onClick={joinRoom}>Join Room</Button>
+                            <Button m="1vh" onClick={joinRoom}>Create / Join Room</Button>
                         </Flex>
                     </Flex>
                 </Flex>
@@ -37,6 +58,10 @@ const MultiPlayerSelector= () => {
                 <Button as={RouterLink} to="/">Leave</Button>
             </Flex>
         </Layout>
+    )
+
+    return(
+        <Multiplayer room={room} socket={socket}/>
     )
 }
 
