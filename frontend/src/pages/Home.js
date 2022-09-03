@@ -9,8 +9,17 @@ const socket = io.connect("http://localhost:3001")
 function Home() {
 
   const sendMessage = () => {
+    // send the message TO THE SERVER
     socket.emit("send_message", {message: 'abcd'});
   }
+
+  // LISTENS TO AN EVENT SENT BY SERVER
+  useEffect(()=>{
+    socket.on("receive_message", (arg)=>{
+      alert(arg.message)
+    })
+
+  }, [socket])
 
   return (
     <Box h="100vh">

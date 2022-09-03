@@ -21,8 +21,12 @@ const io = new Server(server, {
 io.on("connection", (socket) => {
     console.log(`Client connected: ${socket.id}`)
 
+    // GETTING the send_message event FROM A CLIENT
     socket.on("send_message", (arg) =>{
         console.log(arg)
+
+        // BROADCAST event BACK TO EVERY CLIENT
+        socket.broadcast.emit("receive_message", arg)
     })
 })
 
