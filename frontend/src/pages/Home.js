@@ -27,10 +27,10 @@ function Home() {
       {/* Every page must SIT IN A FLEXBOX OF VH 95 */}
       <Flex h="95vh" w="100%" alignItems="center" flexDirection="column">
           <Heading mt="30vh" size="2xl">ghost</Heading>
-          <Heading mt="5vh" size="1xl">popular word game – now online and multiplayer!</Heading>
+          <Heading mt="5vh" size="1xl">the popular word game – now online and multiplayer!</Heading>
           <Flex>
               <Button m="3vh" as={RouterLink} to="/singleplayerselector">singleplayer</Button>
-              <Button m="3vh" onClick={sendMessage}>multiplayer</Button>
+              <Button m="3vh" as={RouterLink} to="/multiplayerselector">multiplayer</Button>
           </Flex>
       </Flex>
     </Layout>

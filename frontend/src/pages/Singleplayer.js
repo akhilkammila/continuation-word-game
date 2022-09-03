@@ -35,7 +35,13 @@ const Singleplayer = ({difficulty}) => {
 
                 const computerData = data = data.filter(function(el)
                     {
-                        return el.word.length%2==0
+                        if(difficulty==='Easy'){
+                            return el.word.length%2==1
+                        }
+                        if(difficulty==='Hard'){
+                            return el.word.length%2==0
+                        }
+                        return true
                     }
                 )
 
@@ -116,7 +122,7 @@ const Singleplayer = ({difficulty}) => {
 
                 <Flex>
                     <form onSubmit={e => handleSubmit(e)}>
-                        <Input onChange={(e)=> setFormEntry(e.currentTarget.value)}></Input>
+                        <Input onChange={(e)=> setFormEntry(e.currentTarget.value)} placeholder="enter your next letter"></Input>
                         <Input type="submit"></Input>
                     </form>
                 </Flex>
