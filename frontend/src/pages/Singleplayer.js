@@ -5,7 +5,7 @@ import Layout from './Layout.js'
 import MasterWordDisplay from './MasterWordDisplay.js'
 import {Link as RouterLink} from "react-router-dom"
 
-const Singleplayer = () => {
+const Singleplayer = ({difficulty}) => {
     const toast = useToast()
     const startingLetters = 'abcdefghijklmnopqrstuvwxyz'
     const [formEntry, setFormEntry] = useState('')
@@ -133,7 +133,7 @@ const Singleplayer = () => {
 
                 {/* Shows "You" and "Computer" at the bottom*/}
                 <Flex h="15vh" w="100%" alignItems="center" flexDirection="column">
-                    <PlayersDisplay/>
+                    <PlayersDisplay difficulty={difficulty}/>
                 </Flex>
 
                 {/* Button that takes you back*/}

@@ -29,7 +29,7 @@ function Home() {
           <Heading mt="30vh" size="2xl">ghost</Heading>
           <Heading mt="5vh" size="1xl">popular word game – now online and multiplayer!</Heading>
           <Flex>
-              <Button m="3vh" as={RouterLink} to="/singleplayer">singleplayer</Button>
+              <Button m="3vh" as={RouterLink} to="/singleplayerselector">singleplayer</Button>
               <Button m="3vh" onClick={sendMessage}>multiplayer</Button>
           </Flex>
       </Flex>

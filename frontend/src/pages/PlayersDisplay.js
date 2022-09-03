@@ -1,7 +1,7 @@
 import React from 'react'
 import {Box, Heading, Button, Image, Flex, Text, Input} from "@chakra-ui/react"
 
-const PlayersDisplay = () => {
+const PlayersDisplay = ({difficulty}) => {
 
     return (
         <Flex flexDirection="row">
@@ -9,7 +9,7 @@ const PlayersDisplay = () => {
                 <Heading color="green">You</Heading>
             </Flex>
             <Flex m="5vh" flexDirection="column" alignItems="center">
-                <Heading color="red.600">Bot</Heading>
+                <Heading color="red.600">{difficulty} Bot</Heading>
             </Flex>
         </Flex>
     )
