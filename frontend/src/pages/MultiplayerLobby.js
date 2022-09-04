@@ -24,14 +24,6 @@ const MultiplayerLobby = ({room, socket, name}) => {
 
         // In the lobby, updates the players list
         socket.on("someone_joined", (name, size, currPlayers)=>{
-            toast({
-                title: name + ' Joined!',
-                description: 'There are now ' + size + ' players',
-                status: 'success',
-                duration: 3000,
-                position: 'top',
-                isClosable: true,
-            })
             setPlayers(()=>currPlayers)
         })
 

@@ -48,6 +48,17 @@ io.on("connection", (socket) => {
         socket.to(room).emit("receive_letter", letter)
     })
 
+    // Receive that another player lost
+    socket.on("i_lost", (room, name, formEntry)=>{
+        console.log('i got the message that someone lost')
+        socket.to(room).emit("someone_lost", name, formEntry)
+    })
+
+    // Receive a game reset request
+    socket.on("resetting", (room, letter)=>{
+        socket.to(room).emit("receive_reset", letter)
+    })
+
 })
 
 // just confirms that server is running

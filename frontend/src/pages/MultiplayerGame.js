@@ -12,16 +12,60 @@ const MultiplayerGame = ({room, socket, players, startingLetter, name}) => {
     const [masterWord, setMasterWord] = useState(startingLetter)
     const index = players.indexOf(name)
     const [turn, setTurn] = useState(0)
+    const [gameOver, setGameOver] = useState(false)
 
     useEffect(()=>{
         socket.on("receive_letter", (letter) =>{
             setMasterWord((prevWord)=>prevWord + letter)
             setTurn((turn)=> (turn+1)%players.length)
         })
-    }, socket)
+    }, [socket])
+
+    useEffect(()=>{
+        socket.on("someone_lost", (name, letter) =>{
+            toast({
+                title: `You Won! ${name} lost with ${letter}`,
+                status: 'success',
+                duration: 7000,
+                position: 'top',
+                isClosable: true,
+            })
+
+            setGameOver(true)
+
+            console.log("I won lets go!")
+        })
+    }, [socket])
+
+    useEffect(()=>{
+        socket.on("receive_reset", (letter)=>{
+            toast({
+                title: "The game was reset",
+                status: 'success',
+                duration: 3000,
+                position: 'top',
+                isClosable: true,
+            })
+
+            setMasterWord(letter)
+            setTurn(0)
+            setGameOver(false)
+        })
+    })
 
     function handleSubmit(e){
         e.preventDefault()
+        if(gameOver){
+            toast({
+                title: "Game is Over. Please Reset!",
+                status: 'error',
+                duration: 3000,
+                position: 'top',
+                isClosable: true,
+            })
+            return;
+        }
+
         if(index!=turn){
             toast({
                 title: "It's not your turn",
@@ -43,44 +87,66 @@ const MultiplayerGame = ({room, socket, players, startingLetter, name}) => {
             return;
         }
 
+        // check if this player ended a word (lost)
+        // check if theres no possible letters left (lost)
+        fetch(`https://api.datamuse.com/words?sp=${masterWord + formEntry}*`)
+            .then(res => res.json())
+            .then(data => {
+                data = data.filter(function(el)
+                    {
+                        return el.word.length >=5
+                    }
+                )
+                data = data.sort((a,b) => a.word.length - b.word.length);
+
+                // If the player ends the word OR there are no possible words left
+                if(data.length==0){
+                    youLost(formEntry, `Sorry, there are no 5+ letter words starting with ${masterWord+formEntry}`);
+                    setGameOver(true);
+                }
+
+                else if(masterWord+formEntry === data[0].word){
+                    youLost(formEntry, `Sorry, you said the last letter in ${masterWord+formEntry}`);
+                    setGameOver(true)
+                }
+
+            });
+        
+        //normal case, word works
         socket.emit("sending_letter", room, formEntry)
         setMasterWord(prevWord => prevWord + formEntry)
         setTurn((turn)=> (turn+1)%players.length)
     }
 
-    function youWon(message){
-        toast({
-            title: 'YOU WON!',
-            description: message,
-            status: 'success',
-            duration: 3000,
-            position: 'top',
-            isClosable: true,
-        })
-    }
+    function youLost(formEntry, message){
+        socket.emit("i_lost", room, name, formEntry)
 
-    function youLost(message){
         toast({
             title: 'You Lost',
             description: message,
             status: 'error',
-            duration: 3000,
+            duration: 7000,
             position: 'top',
             isClosable: true,
         })
+        console.log('lost :(')
     }
 
     function reset(){
-        setMasterWord('')
+        const letter = 'abcdefghijklmnopqrstuvwxyz'.charAt(Math.floor(Math.random() * 26))
+        socket.emit("resetting", room, letter)
+
+        setMasterWord(letter)
+        setTurn(0)
+        setGameOver(false)
     }
 
     return (
         <Layout>
             <Flex h="95vh" w="100%" alignItems="center" flexDirection="column">
                 {/* Displays the Current word */}
-                <Heading>It's {players[turn]}'s turn</Heading>
-                <Heading>{turn}</Heading>
-                <Flex mt="10vh" h="70vh" w="100%" alignItems="center" flexDirection="column">
+                <Flex mt="2vh" h="70vh" w="100%" alignItems="center" flexDirection="column">
+                    <Heading m="5vh">It's {players[turn]}'s turn</Heading>
                     <MasterWordDisplay masterWord={masterWord}/>
                 </Flex>
 

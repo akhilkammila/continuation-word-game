@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import {Box, Heading, Button, Image, Flex, Text} from "@chakra-ui/react"
 import LetterDisplay from './LetterDisplay'
 
-const MasterWordDisplay = ({masterWord}) => {
+const MasterWordDisplay = ({masterWord, numPlayers}) => {
 
     const lettersArray = masterWord.split("")
     
