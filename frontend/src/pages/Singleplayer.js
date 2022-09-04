@@ -67,7 +67,13 @@ const Singleplayer = ({difficulty}) => {
                 }
 
                 //Computer plays their letter
-                const computerLetter = computerData[0].word[masterWord.length+1]
+                //first word in the list if easy or hard
+                //random word if medium
+                let computerLetter = computerData[0].word[masterWord.length+1]
+                if(difficulty==='Medium'){
+                    console.log('runing medium')
+                    computerLetter = computerData[Math.floor(Math.random() * computerData.length)].word[masterWord.length+1]
+                }
 
                 //Filter the data to only words that continue with computer's letter
                 data = data.filter(function(el)
