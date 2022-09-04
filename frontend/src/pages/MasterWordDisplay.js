@@ -5,7 +5,6 @@ import LetterDisplay from './LetterDisplay'
 const MasterWordDisplay = ({masterWord}) => {
 
     const lettersArray = masterWord.split("")
-
     
     return(
         <Flex flexDirection="column" alignItems="center">

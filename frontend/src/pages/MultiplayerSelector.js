@@ -3,7 +3,7 @@ import React, {useState} from 'react'
 import {Box, Heading, Button, Image, Flex, Input, useToast} from "@chakra-ui/react"
 import {Link as RouterLink} from "react-router-dom"
 import Layout from './Layout.js'
-import Multiplayer from './Multiplayer.js'
+import MultiplayerLobby from './MultiplayerLobby.js'
 
 import io from 'socket.io-client'
 const socket = io.connect("http://localhost:3001")
@@ -60,7 +60,7 @@ const MultiPlayerSelector= () => {
     )
 
     return(
-        <Multiplayer room={room} socket={socket}/>
+        <MultiplayerLobby room={room} socket={socket}/>
     )
 }
 
