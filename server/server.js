@@ -43,6 +43,11 @@ io.on("connection", (socket) => {
         socket.to(room).emit("receive_start_game", startingLetter)
     })
 
+    // Receive another player's turn
+    socket.on("sending_letter", (room, letter)=>{
+        socket.to(room).emit("receive_letter", letter)
+    })
+
 })
 
 // just confirms that server is running
