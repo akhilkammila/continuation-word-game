@@ -23,14 +23,16 @@ io.on("connection", (socket) => {
 
     // LISTENS for a socket trying to join a room, then CONNECTS IT to the room
     socket.on("join_room", (data) =>{
-        console.log('socket is joining a room')
-        socket.join(data)
+        console.log('socket is trying to join a room')
+
+        socket.join(data.room)
+        socket.to(data.room).emit("someone_joined", data.id)
     })
 
     // LISTENS for a socket sending a message, then emits to ALL SOCKETS IN THE ROOM
     socket.on("send_message", (data)=>{
         console.log(data.room)
-        socket.to(data.room).emit("receive_message", data)
+        socket.to(data.room).emit("receive_message", data.id)
     })
 
 })

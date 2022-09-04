@@ -4,6 +4,7 @@ import {Link as RouterLink} from "react-router-dom"
 import Layout from './Layout.js'
 
 const Multiplayer = ({room, socket}) => {
+    const toast = useToast()
     const [formEntry, setFormEntry] = useState('')
     const [messagesReceived, setMessagesReceived] = useState(['below are the messages exchanged'])
 
@@ -20,6 +21,18 @@ const Multiplayer = ({room, socket}) => {
         socket.on("receive_message", (data)=>{
             setMessagesReceived(messagesReceived => messagesReceived.concat(data.formEntry))
         })
+
+        socket.on("someone_joined", (data)=>{
+            toast({
+                title: data + ' Joined!',
+                description: 'Remember: there can be 5 players max',
+                status: 'success',
+                duration: 3000,
+                position: 'top',
+                isClosable: true,
+            })
+        })
+
     }, [socket])
     
     return (

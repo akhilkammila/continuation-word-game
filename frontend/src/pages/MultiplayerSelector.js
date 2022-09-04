@@ -18,6 +18,7 @@ const MultiPlayerSelector= () => {
 
 
     function joinRoom(){
+
         console.log('creating / joining room')
         if(room==""){
             toast({
@@ -31,11 +32,9 @@ const MultiPlayerSelector= () => {
             return
         }
 
-        if(name==""){
-            setName(defaultName)
-        }
+        const id = name=='' ? defaultName : name;
         
-        socket.emit("join_room", room)
+        socket.emit("join_room", {room, id} )
 
         setInRoom(true)
     }
