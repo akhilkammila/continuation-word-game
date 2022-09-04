@@ -11,19 +11,19 @@ function SinglePlayerSelector() {
 
     if (difficulty===0) return (
         <Layout>
-        {/* Every page must SIT IN A FLEXBOX OF VH 95 */}
-        <Flex h="95vh" w="100%" alignItems="center" flexDirection="column" justifyContent="center">
-            <Flex h="80vh" justifyContent="center" alignItems="center" flexDirection="column">
-                <Heading>choose a difficulty</Heading>
-                <Flex flexDirection="row">
-                    <Button m="3vh" onClick={()=>setDifficulty(1)}>Easy</Button>
-                    <Button m="3vh" onClick={()=>setDifficulty(2)}>Medium</Button>
-                    <Button m="3vh" onClick={()=>setDifficulty(3)}>Hard</Button>
+            {/* Every page must SIT IN A FLEXBOX OF VH 95 */}
+            <Flex h="95vh" w="100%" alignItems="center" flexDirection="column" justifyContent="center">
+                <Flex h="80vh" justifyContent="center" alignItems="center" flexDirection="column">
+                    <Heading>choose a difficulty</Heading>
+                    <Flex flexDirection="row">
+                        <Button m="3vh" onClick={()=>setDifficulty(1)}>Easy</Button>
+                        <Button m="3vh" onClick={()=>setDifficulty(2)}>Medium</Button>
+                        <Button m="3vh" onClick={()=>setDifficulty(3)}>Hard</Button>
+                    </Flex>
                 </Flex>
-            </Flex>
 
-            <Button as={RouterLink} to="/">Leave</Button>
-        </Flex>
+                <Button as={RouterLink} to="/">Leave</Button>
+            </Flex>
         </Layout>
     )
 

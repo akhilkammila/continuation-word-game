@@ -30,11 +30,12 @@ io.on("connection", (socket) => {
 
         let clientsInRoom = 0;
         if (io.sockets.adapter.rooms.has(data.room)) clientsInRoom = io.sockets.adapter.rooms.get(data.room).size
-
         
         players.set(data.room, players.has(data.room) ? players.get(data.room).concat(data.id) : [data.id])
 
         socket.join(data.room)
+
+        // Not actually using these anymore
         socket.to(data.room).emit("someone_joined", data.id, clientsInRoom+1, players.get(data.room))
         socket.emit("someone_joined", data.id, clientsInRoom+1, players.get(data.room))
     })
@@ -58,6 +59,11 @@ io.on("connection", (socket) => {
     // Receive a game reset request
     socket.on("resetting", (room, letter)=>{
         socket.to(room).emit("receive_reset", letter)
+    })
+
+    // Receiving a notice that a player left
+    socket.on("leaving", (room, name, index)=>{
+        socket.to(room).emit("someone_left", name, index)
     })
 
 })

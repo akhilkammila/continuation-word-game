@@ -15,6 +15,18 @@ const MultiplayerGame = ({room, socket, players, startingLetter, name}) => {
     const [gameOver, setGameOver] = useState(false)
 
     useEffect(()=>{
+        socket.on("could_not_join", (message) =>{
+            toast({
+                title: message,
+                status: 'error',
+                duration: 3000,
+                position: 'top',
+                isClosable: true,
+            })
+        })
+    }, [socket])
+
+    useEffect(()=>{
         socket.on("receive_letter", (letter) =>{
             setMasterWord((prevWord)=>prevWord + letter)
             setTurn((turn)=> (turn+1)%players.length)
@@ -51,7 +63,20 @@ const MultiplayerGame = ({room, socket, players, startingLetter, name}) => {
             setTurn(0)
             setGameOver(false)
         })
-    })
+    }, [socket])
+
+    useEffect(()=>{
+        socket.on("someone_left", (name, index)=>{
+            toast({
+                title: name + "left the game",
+                description: 'create a new lobby',
+                status: 'warning',
+                duration: 7000,
+                position: 'top',
+                isClosable: true,
+            })
+        })
+    }, [socket])
 
     function handleSubmit(e){
         e.preventDefault()
@@ -141,6 +166,11 @@ const MultiplayerGame = ({room, socket, players, startingLetter, name}) => {
         setGameOver(false)
     }
 
+    function leave(){
+        console.log('im leaving, this runs')
+        socket.emit("leaving", room, name, index)
+    }
+
     return (
         <Layout>
             <Flex h="95vh" w="100%" alignItems="center" flexDirection="column">
@@ -162,7 +192,7 @@ const MultiplayerGame = ({room, socket, players, startingLetter, name}) => {
                         Reset
                     </Button>
 
-                    <Button ml="3vh" as={RouterLink} to="/">
+                    <Button onClick={()=>leave()} ml="3vh" as={RouterLink} to="/">
                         Leave
                     </Button>
                 </Flex>

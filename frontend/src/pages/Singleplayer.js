@@ -117,7 +117,7 @@ const Singleplayer = ({difficulty}) => {
             <Flex h="95vh" w="100%" alignItems="center" flexDirection="column">
                 {/* Displays the Current word */}
                 <Flex mt="10vh" h="70vh" w="100%" alignItems="center" flexDirection="column">
-                    <MasterWordDisplay masterWord={masterWord}/>
+                    <MasterWordDisplay masterWord={masterWord} numPlayers={2}/>
                 </Flex>
 
                 <Flex>
