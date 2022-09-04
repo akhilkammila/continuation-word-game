@@ -9,7 +9,7 @@ const MasterWordDisplay = ({masterWord, numPlayers}) => {
     return(
         <Flex flexDirection="column" alignItems="center">
             {lettersArray.map((letter, index)=>{
-                return <LetterDisplay letter={letter} index={index}></LetterDisplay>
+                return <LetterDisplay letter={letter} index={index} numPlayers={numPlayers}></LetterDisplay>
             })}
         </Flex>
         

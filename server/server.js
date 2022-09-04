@@ -31,6 +31,7 @@ io.on("connection", (socket) => {
         let clientsInRoom = 0;
         if (io.sockets.adapter.rooms.has(data.room)) clientsInRoom = io.sockets.adapter.rooms.get(data.room).size
 
+        
         players.set(data.room, players.has(data.room) ? players.get(data.room).concat(data.id) : [data.id])
 
         socket.join(data.room)

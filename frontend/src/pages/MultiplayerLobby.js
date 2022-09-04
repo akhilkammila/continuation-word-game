@@ -13,6 +13,18 @@ const MultiplayerLobby = ({room, socket, name}) => {
 
     // SENDS THE MESSAGE TO ALL OTHER SOCKETS
     const handleStart = () => {
+        if(players.length<2){
+            toast({
+                title: 'Not Enough Players to Start',
+                description: '2+ needed',
+                status: 'error',
+                duration: 3000,
+                position: 'top',
+                isClosable: true,
+            })
+            return;
+        }
+
         const letter = 'abcdefghijklmnopqrstuvwxyz'.charAt(Math.floor(Math.random() * 26))
         setStartingLetter(letter)
         setGameStarted(()=>true)

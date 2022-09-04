@@ -147,7 +147,7 @@ const MultiplayerGame = ({room, socket, players, startingLetter, name}) => {
                 {/* Displays the Current word */}
                 <Flex mt="2vh" h="70vh" w="100%" alignItems="center" flexDirection="column">
                     <Heading m="5vh">It's {players[turn]}'s turn</Heading>
-                    <MasterWordDisplay masterWord={masterWord}/>
+                    <MasterWordDisplay masterWord={masterWord} numPlayers={players.length}/>
                 </Flex>
 
                 <Flex>
