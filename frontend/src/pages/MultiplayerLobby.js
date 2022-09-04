@@ -3,28 +3,26 @@ import {Box, Heading, Button, Image, Flex, Input, useToast} from "@chakra-ui/rea
 import {Link as RouterLink} from "react-router-dom"
 import Layout from './Layout.js'
 import MultiPlayerPlayersDisplay from './MultiplayerPlayersDisplay.js'
+import MultiPlayerGame from './MultiplayerGame.js'
 
 const MultiplayerLobby = ({room, socket}) => {
     const toast = useToast()
-    const [formEntry, setFormEntry] = useState('')
-    const [messagesReceived, setMessagesReceived] = useState(['below are the messages exchanged'])
     const [players, setPlayers] = useState(['hi'])
     const [gameStarted, setGameStarted] = useState(false)
+    const [startingLetter, setStartingLetter] = useState('')
 
     // SENDS THE MESSAGE TO ALL OTHER SOCKETS
-    const handleStart = (e) =>{
-        console.log('submitting a message')
-        e.preventDefault()
-        socket.emit("send_message", {formEntry, room})
+    const handleStart = () => {
+        const letter = 'abcdefghijklmnopqrstuvwxyz'.charAt(Math.floor(Math.random() * 26))
+        setStartingLetter(letter)
+        setGameStarted(()=>true)
+        socket.emit("start_game", room, letter)
     }
 
     // LISTENS TO MESSAGES FROM OTHER SOCKETS
     useEffect(()=>{
-        console.log('I RECEIVED A MSG')
-        socket.on("receive_message", (data)=>{
-            setMessagesReceived(messagesReceived => messagesReceived.concat(data.formEntry))
-        })
 
+        // In the lobby, updates the players list
         socket.on("someone_joined", (name, size, currPlayers)=>{
             toast({
                 title: name + ' Joined!',
@@ -34,8 +32,13 @@ const MultiplayerLobby = ({room, socket}) => {
                 position: 'top',
                 isClosable: true,
             })
-
             setPlayers(()=>currPlayers)
+        })
+
+        // start game 
+        socket.on("receive_start_game", (letter)=>{
+            setStartingLetter(letter)
+            setGameStarted(()=>true)
 
         })
 
@@ -58,6 +61,12 @@ const MultiplayerLobby = ({room, socket}) => {
             </Layout>
         )
     }
+
+    return(
+        <Box>
+            <MultiPlayerGame room={room} socket={socket} players={players} startingLetter={startingLetter}/>
+        </Box>
+    )
 }
 
 export default MultiplayerLobby

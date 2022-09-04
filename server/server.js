@@ -39,9 +39,8 @@ io.on("connection", (socket) => {
     })
 
     // LISTENS for a socket sending a message, then emits to ALL SOCKETS IN THE ROOM
-    socket.on("send_message", (data)=>{
-        console.log(data.room)
-        socket.to(data.room).emit("receive_message", data.id)
+    socket.on("start_game", (room, startingLetter)=>{
+        socket.to(room).emit("receive_start_game", startingLetter)
     })
 
 })
