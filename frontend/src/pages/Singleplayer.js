@@ -48,7 +48,7 @@ const Singleplayer = ({difficulty}) => {
                     }
                 )
 
-                console.log('after medium filter')
+                console.log('after filter')
                 console.log(data);
                 
 

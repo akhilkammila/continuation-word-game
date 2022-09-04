@@ -68,7 +68,7 @@ const MultiplayerGame = ({room, socket, players, startingLetter, name}) => {
     useEffect(()=>{
         socket.on("someone_left", (name, index)=>{
             toast({
-                title: name + "left the game",
+                title: name + " left the game",
                 description: 'create a new lobby',
                 status: 'warning',
                 duration: 7000,

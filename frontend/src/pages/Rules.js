@@ -18,7 +18,7 @@ const Rules = () => {
                 </Flex>
 
                 <Flex m="2vh" alignItems="center" flexDirection="column">
-                    <Heading size="md">but just in case, here's some basic rules in small-ish font so you hopefully dont read them</Heading>
+                    <Heading size="md">but just in case, here's some basic rules in small-ish font so you hopefully dont overanalyze them</Heading>
                     <Heading size="md">on your turn, enter a letter that leads to a real world</Heading>
                     <Heading size="md">whoever says the last letter of a word loses</Heading>
                 </Flex>
@@ -30,6 +30,7 @@ const Rules = () => {
                     <Text fontSize="lg"> u -> perfect! you are building towards the word "opposum", but didn't say the last letter </Text>
                 </Flex>
 
+                <Heading size="md">also, only words >=5 letters count</Heading>
                 <Heading size="md">have fun!</Heading>
 
             </Flex>
