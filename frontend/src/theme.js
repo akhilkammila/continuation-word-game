@@ -1,7 +1,13 @@
 import { extendTheme } from "@chakra-ui/react";
 
-const customTheme = extendTheme({
+const config = {
     fonts:{
         body: 'Raleway'
-    }
-})
+    },
+
+    initialColorMode: 'dark',
+    useSystemColorMode: false,
+}
+
+const theme = extendTheme({config})
+export default theme
