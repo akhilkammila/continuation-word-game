@@ -31,7 +31,7 @@ function Home() {
             <Heading size="2xl">ghost</Heading>
             <Image ml="2vh" w="10vh" src={ghost}></Image>
           </Flex>
-          <Heading mt="5vh" size="1xl">the popular word game – now online and multiplayer!</Heading>
+          <Heading mt="4vh" size="1xl">the popular word game – now online and multiplayer!</Heading>
           <Flex mt="2vh">
               <Button m="1.5vh" as={RouterLink} to="/singleplayerselector">singleplayer</Button>
               <Button m="1.5vh" as={RouterLink} to="/multiplayerselector">multiplayer</Button>

@@ -23,15 +23,18 @@ const Singleplayer = ({difficulty}) => {
         console.log('submitted your letter')
 
 
-        fetch(`https://api.datamuse.com/words?sp=${masterWord + formEntry}*`)
+        fetch(`https://api.datamuse.com/words?sp=${masterWord + formEntry}*-123456789 `)
             .then(res => res.json())
             .then(data => {
                 data = data.filter(function(el)
                     {
-                        return el.word.length >=5
+                        return el.word.length >=5 && !el.word.includes(" ")
                     }
                 )
                 data = data.sort((a,b) => a.word.length - b.word.length);
+
+                console.log('before filter')
+                console.log(data)
 
                 const computerData = data = data.filter(function(el)
                     {
@@ -41,12 +44,13 @@ const Singleplayer = ({difficulty}) => {
                         if(difficulty==='Hard'){
                             return el.word.length%2==0
                         }
-                        return true
+                        return data.length==0 || !el.word.includes(data[0].word)
                     }
                 )
 
+                console.log('after medium filter')
                 console.log(data);
-                console.log('just fetched api 2')
+                
 
                 // If the player ends the word OR there are no possible words left
                 if(data.length==0){
@@ -69,10 +73,14 @@ const Singleplayer = ({difficulty}) => {
                 //Computer plays their letter
                 //first word in the list if easy or hard
                 //random word if medium
+
+                console.log(computerData.length)
+
                 let computerLetter = computerData[0].word[masterWord.length+1]
+
                 if(difficulty==='Medium'){
                     console.log('runing medium')
-                    computerLetter = computerData[Math.floor(Math.random() * computerData.length)].word[masterWord.length+1]
+                    computerLetter = computerData[Math.floor(Math.random() * computerData.length/2 + computerData.length/2)].word[masterWord.length+1]
                 }
 
                 //Filter the data to only words that continue with computer's letter
