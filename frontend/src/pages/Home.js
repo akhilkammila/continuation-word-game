@@ -4,6 +4,7 @@ import {Box, Heading, Button, Image, Flex} from "@chakra-ui/react"
 import {Link as RouterLink} from "react-router-dom"
 import ToggleMode from './ToggleMode.js'
 import Layout from './Layout.js'
+import ghost from '../images/ghost.svg'
 
 import io from 'socket.io-client'
 const socket = io.connect("http://localhost:3001")
@@ -26,7 +27,10 @@ function Home() {
 
       {/* Every page must SIT IN A FLEXBOX OF VH 95 */}
       <Flex h="95vh" w="100%" alignItems="center" flexDirection="column">
-          <Heading mt="30vh" size="2xl">ghost</Heading>
+          <Flex mt="30vh" alignItems="center" justifyContent="center">
+            <Heading size="2xl">ghost</Heading>
+            <Image ml="2vh" w="10vh" src={ghost}></Image>
+          </Flex>
           <Heading mt="5vh" size="1xl">the popular word game – now online and multiplayer!</Heading>
           <Flex mt="2vh">
               <Button m="1.5vh" as={RouterLink} to="/singleplayerselector">singleplayer</Button>
