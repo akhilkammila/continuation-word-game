@@ -33,6 +33,7 @@ const MultiPlayerSelector= () => {
         }
 
         const id = name=='' ? defaultName : name;
+        setName(()=>id)
         
         socket.emit("join_room", {room, id} )
 
@@ -60,7 +61,7 @@ const MultiPlayerSelector= () => {
     )
 
     return(
-        <MultiplayerLobby room={room} socket={socket}/>
+        <MultiplayerLobby room={room} socket={socket} name={name}/>
     )
 }
 

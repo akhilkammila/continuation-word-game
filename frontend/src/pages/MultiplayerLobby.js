@@ -5,7 +5,7 @@ import Layout from './Layout.js'
 import MultiPlayerPlayersDisplay from './MultiplayerPlayersDisplay.js'
 import MultiPlayerGame from './MultiplayerGame.js'
 
-const MultiplayerLobby = ({room, socket}) => {
+const MultiplayerLobby = ({room, socket, name}) => {
     const toast = useToast()
     const [players, setPlayers] = useState(['hi'])
     const [gameStarted, setGameStarted] = useState(false)
@@ -64,7 +64,7 @@ const MultiplayerLobby = ({room, socket}) => {
 
     return(
         <Box>
-            <MultiPlayerGame room={room} socket={socket} players={players} startingLetter={startingLetter}/>
+            <MultiPlayerGame room={room} socket={socket} players={players} startingLetter={startingLetter} name ={name}/>
         </Box>
     )
 }
