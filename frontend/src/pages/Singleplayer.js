@@ -11,6 +11,7 @@ const Singleplayer = ({difficulty}) => {
     const [formEntry, setFormEntry] = useState('')
     const [masterWord, setMasterWord] = useState(startingLetters.charAt(Math.floor(Math.random() * 
     startingLetters.length)))
+    const [gameOver, setGameOver] = useState(false)
 
     useEffect(()=>{
         console.log(masterWord)
@@ -18,6 +19,16 @@ const Singleplayer = ({difficulty}) => {
 
     function handleSubmit(e){
         e.preventDefault()
+        if(gameOver){
+            toast({
+                title: "Game is Over. Please Reset!",
+                status: 'error',
+                duration: 3000,
+                position: 'top',
+                isClosable: true,
+            })
+        }
+
         if(formEntry.length!=1) return;
 
         console.log('submitted your letter')
@@ -109,6 +120,8 @@ const Singleplayer = ({difficulty}) => {
             position: 'top',
             isClosable: true,
         })
+
+        setGameOver(true)
     }
 
     function youLost(message){
@@ -120,10 +133,13 @@ const Singleplayer = ({difficulty}) => {
             position: 'top',
             isClosable: true,
         })
+
+        setGameOver(true)
     }
 
     function reset(){
         setMasterWord(startingLetters.charAt(Math.floor(Math.random() * startingLetters.length)))
+        setGameOver(false)
     }
 
     return (

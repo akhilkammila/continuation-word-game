@@ -124,6 +124,8 @@ const MultiplayerGame = ({room, socket, players, startingLetter, name}) => {
                 )
                 data = data.sort((a,b) => a.word.length - b.word.length);
 
+                console.log(data)
+
                 // If the player ends the word OR there are no possible words left
                 if(data.length==0){
                     youLost(formEntry, `Sorry, there are no 5+ letter words starting with ${masterWord+formEntry}`);
