@@ -7,7 +7,7 @@ import Layout from './Layout.js'
 import ghost from '../images/ghost.svg'
 
 import io from 'socket.io-client'
-const socket = io.connect("http://ghostwordgame-env-1.eba-ywgfdywv.us-east-1.elasticbeanstalk.com/")
+const socket = io.connect("https://www.ghostwordgame.tk/")
 
 function Home() {
 

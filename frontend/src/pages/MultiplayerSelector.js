@@ -6,7 +6,7 @@ import Layout from './Layout.js'
 import MultiplayerLobby from './MultiplayerLobby.js'
 
 import io from 'socket.io-client'
-const socket = io.connect("http://ghostwordgame-env-1.eba-ywgfdywv.us-east-1.elasticbeanstalk.com/")
+const socket = io.connect("https://www.ghostwordgame.tk/")
 
 const MultiPlayerSelector= () => {
     const toast = useToast()

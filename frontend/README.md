@@ -34,3 +34,10 @@ or this video https://www.youtube.com/watch?v=djMy4QsPWiI&ab_channel=PedroTech i
 
 elastic beanstalk tutorial
 https://www.youtube.com/watch?v=sybZlA6lUns&ab_channel=WornOffKeys
+
+getting https to work (so vercel doesnt block)
+https://www.youtube.com/watch?v=BeOKTpFsuvk&ab_channel=WornOffKeys
+https://www.youtube.com/watch?v=8j9Q5iDN1Hk&ab_channel=MichaelKitas
+https://www.youtube.com/watch?v=3Uopc4AFjOY&ab_channel=RANAsVFX
+
+freenom for domain name
