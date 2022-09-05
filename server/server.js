@@ -12,10 +12,11 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
     cors: {
-        origin: "https://ghostgame.vercel.app/",
+        origin: "localhost:3000",
         methods: ["GET", "POST"],
     }
 })
+// for production: origin is https://ghostgame.vercel.app/
 
 const players = new Map();
 

@@ -7,7 +7,7 @@ import Layout from './Layout.js'
 import ghost from '../images/ghost.svg'
 
 import io from 'socket.io-client'
-const socket = io.connect("https://www.ghostwordgame.tk/")
+const socket = io.connect("localhost:3001")
 
 function Home() {
 

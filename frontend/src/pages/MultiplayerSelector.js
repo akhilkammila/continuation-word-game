@@ -5,8 +5,10 @@ import {Link as RouterLink} from "react-router-dom"
 import Layout from './Layout.js'
 import MultiplayerLobby from './MultiplayerLobby.js'
 
+// for production, socket link is https://www.ghostwordgame.tk/
+
 import io from 'socket.io-client'
-const socket = io.connect("https://www.ghostwordgame.tk/")
+const socket = io.connect("localhost:3001")
 
 const MultiPlayerSelector= () => {
     const toast = useToast()

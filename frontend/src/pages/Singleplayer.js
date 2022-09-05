@@ -47,7 +47,7 @@ const Singleplayer = ({difficulty}) => {
                 console.log('before filter')
                 console.log(data)
 
-                const computerData = data = data.filter(function(el)
+                const computerData = data.filter(function(el)
                     {
                         if(difficulty==='Easy'){
                             return el.word.length%2==1
