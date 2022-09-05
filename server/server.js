@@ -4,6 +4,7 @@ const http = require("http");
 const { Server } = require("socket.io");
 const cors = require("cors");
 const { Socket } = require("dgram");
+const { PORT = 3001} = process.env;
 
 app.use(cors());
 
@@ -11,7 +12,7 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
     cors: {
-        origin: "http://localhost:3000",
+        origin: "https://ghostgame.vercel.app/",
         methods: ["GET", "POST"],
     }
 })
@@ -69,6 +70,6 @@ io.on("connection", (socket) => {
 })
 
 // just confirms that server is running
-server.listen(3001, ()=>{
+server.listen(PORT, ()=>{
     console.log('server is running')
 })
