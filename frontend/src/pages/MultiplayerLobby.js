@@ -7,7 +7,7 @@ import MultiPlayerGame from './MultiplayerGame.js'
 
 const MultiplayerLobby = ({room, socket, name}) => {
     const toast = useToast()
-    const [players, setPlayers] = useState(['hi'])
+    const [players, setPlayers] = useState(['not connected to backend'])
     const [gameStarted, setGameStarted] = useState(false)
     const [startingLetter, setStartingLetter] = useState('')
 
