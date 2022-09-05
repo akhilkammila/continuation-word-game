@@ -73,3 +73,6 @@ io.on("connection", (socket) => {
 server.listen(PORT, ()=>{
     console.log('server is running')
 })
+
+// test to confirm server is running when url searched
+app.get('/', (req, res)=> res.send('Hello World'))
