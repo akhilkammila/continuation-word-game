@@ -8,7 +8,7 @@ import MultiplayerLobby from './MultiplayerLobby.js'
 // for production, socket link is https://www.ghostwordgame.tk/
 
 import io from 'socket.io-client'
-const socket = io.connect("localhost:3001")
+const socket = io.connect("https://www.ghostwordgame.tk/")
 
 const MultiPlayerSelector= () => {
     const toast = useToast()
