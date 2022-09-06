@@ -19,6 +19,7 @@ const io = new Server(server, {
 // for production: origin is https://ghostgame.vercel.app/
 
 const players = new Map();
+const socketinfo = new Map();
 
 // first event, runs when client connects
 // the socket is the client essentially, it comes from the arg
@@ -36,6 +37,7 @@ io.on("connection", (socket) => {
         players.set(data.room, players.has(data.room) ? players.get(data.room).concat(data.id) : [data.id])
 
         socket.join(data.room)
+        socketinfo.set(socket.id, [data.id, data.room])
 
         // Not actually using these anymore
         socket.to(data.room).emit("someone_joined", data.id, clientsInRoom+1, players.get(data.room))
@@ -64,9 +66,35 @@ io.on("connection", (socket) => {
     })
 
     // Receiving a notice that a player left
-    socket.on("leaving", (room, name, index)=>{
-        socket.to(room).emit("someone_left", name, index)
-    })
+    // socket.on("leaving", (room, name, index)=>{
+    //     socket.to(room).emit("someone_left", name, index)
+    // })
+
+    socket.on('disconnect', function() {
+        console.log('real socket disconnect is running')
+
+        // in case the socket disconnect event was transmitted twice
+        if(!socketinfo.has(socket.id)){
+            console.log('it ran twice')
+            return;
+        }
+
+        if(!socketinfo.has(socket.id)){
+            console.log('BIG PROBLEM')
+        }
+
+        socketName = socketinfo.get(socket.id)[0]
+        socketRoom = socketinfo.get(socket.id)[1]
+
+        socketinfo.delete(socket.id)
+
+        beforePlayers = players.get(socketRoom)
+        afterPlayers = beforePlayers.filter(item => item!=socketName)
+
+        players.set(socketRoom, afterPlayers)
+
+        socket.to(socketRoom).emit("someone_left", socketName, afterPlayers)
+    });
 
 })
 

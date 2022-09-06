@@ -6,13 +6,14 @@ import MasterWordDisplay from './MasterWordDisplay.js'
 import {Link as RouterLink} from "react-router-dom"
 import MultiPlayerPlayersDisplay from './MultiplayerPlayersDisplay'
 
-const MultiplayerGame = ({room, socket, players, startingLetter, name}) => {
+const MultiplayerGame = ({room, socket, initialPlayers, startingLetter, name}) => {
     const toast = useToast()
     const [formEntry, setFormEntry] = useState('')
     const [masterWord, setMasterWord] = useState(startingLetter)
-    const index = players.indexOf(name)
+    const index = initialPlayers.indexOf(name)
     const [turn, setTurn] = useState(0)
     const [gameOver, setGameOver] = useState(false)
+    const [players, setPlayers] = useState(initialPlayers)
 
     useEffect(()=>{
         socket.on("could_not_join", (message) =>{
@@ -66,16 +67,19 @@ const MultiplayerGame = ({room, socket, players, startingLetter, name}) => {
     }, [socket])
 
     useEffect(()=>{
-        socket.on("someone_left", (name, index)=>{
+        socket.on("someone_left", (name, afterPlayers)=>{
+            console.log('received the someone left mesage')
             toast({
                 title: name + " left the game",
-                description: 'create a new lobby',
+                description: 'reset the game',
                 status: 'warning',
                 duration: 7000,
                 position: 'top',
                 isClosable: true,
             })
+            setPlayers(()=>afterPlayers)
         })
+
     }, [socket])
 
     function handleSubmit(e){
@@ -168,11 +172,6 @@ const MultiplayerGame = ({room, socket, players, startingLetter, name}) => {
         setGameOver(false)
     }
 
-    function leave(){
-        console.log('im leaving, this runs')
-        socket.emit("leaving", room, name, index)
-    }
-
     return (
         <Layout>
             <Flex h="95vh" w="100%" alignItems="center" flexDirection="column">
@@ -194,7 +193,7 @@ const MultiplayerGame = ({room, socket, players, startingLetter, name}) => {
                         Reset
                     </Button>
 
-                    <Button onClick={()=>leave()} ml="3vh" as={RouterLink} to="/">
+                    <Button ml="3vh" as={RouterLink} to="/">
                         Leave
                     </Button>
                 </Flex>

@@ -48,6 +48,20 @@ const MultiplayerLobby = ({room, socket, name}) => {
 
         })
 
+        // in lobby, someone left
+        socket.on("someone_left", (socketName, afterPlayers)=>{
+            toast({
+                title: socketName + " left the game",
+                description: 'reset the game',
+                status: 'warning',
+                duration: 7000,
+                position: 'top',
+                isClosable: true,
+            })
+
+            setPlayers(() => afterPlayers)
+        })
+
     }, [socket])
     
     if(!gameStarted){
@@ -70,7 +84,7 @@ const MultiplayerLobby = ({room, socket, name}) => {
 
     return(
         <Box>
-            <MultiPlayerGame room={room} socket={socket} players={players} startingLetter={startingLetter} name ={name}/>
+            <MultiPlayerGame room={room} socket={socket} initialPlayers={players} startingLetter={startingLetter} name ={name}/>
         </Box>
     )
 }
