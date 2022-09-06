@@ -13,10 +13,6 @@ const Singleplayer = ({difficulty}) => {
     startingLetters.length)))
     const [gameOver, setGameOver] = useState(false)
 
-    useEffect(()=>{
-        console.log(masterWord)
-    })
-
     function handleSubmit(e){
         e.preventDefault()
         if(gameOver){
@@ -31,7 +27,7 @@ const Singleplayer = ({difficulty}) => {
 
         if(formEntry.length!=1) return;
 
-        console.log('submitted your letter')
+        // console.log('submitted your letter')
 
 
         fetch(`https://api.datamuse.com/words?sp=${masterWord + formEntry}*-123456789 `)
@@ -44,23 +40,24 @@ const Singleplayer = ({difficulty}) => {
                 )
                 data = data.sort((a,b) => a.word.length - b.word.length);
 
-                console.log('before filter')
+                console.log('in case you need some help')
+                console.log('and no, this isnt available in multiplayer')
                 console.log(data)
 
                 const computerData = data.filter(function(el)
                     {
                         if(difficulty==='Easy'){
-                            return el.word.length%2==1
+                            return el.word.length%2===1
                         }
                         if(difficulty==='Hard'){
-                            return el.word.length%2==0
+                            return el.word.length%2===0
                         }
-                        return data.length==0 || !el.word.includes(data[0].word)
+                        return data.length===0 || !el.word.includes(data[0].word)
                     }
                 )
 
-                console.log('after filter')
-                console.log(data);
+                // console.log('after filter')
+                // console.log(computerData);
                 
 
                 // If the player ends the word OR there are no possible words left
@@ -85,12 +82,12 @@ const Singleplayer = ({difficulty}) => {
                 //first word in the list if easy or hard
                 //random word if medium
 
-                console.log(computerData.length)
+                // console.log(computerData.length)
 
                 let computerLetter = computerData[0].word[masterWord.length+1]
 
                 if(difficulty==='Medium'){
-                    console.log('runing medium')
+                    // console.log('runing medium')
                     computerLetter = computerData[Math.floor(Math.random() * computerData.length/2 + computerData.length/2)].word[masterWord.length+1]
                 }
 

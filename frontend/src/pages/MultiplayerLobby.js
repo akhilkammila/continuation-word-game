@@ -33,11 +33,11 @@ const MultiplayerLobby = ({room, socket, name}) => {
 
     // LISTENS TO MESSAGES FROM OTHER SOCKETS
     useEffect(()=>{
-        console.log('a socket changed!')
+        // console.log('a socket changed!')
 
         // In the lobby, updates the players list
         socket.on("someone_joined", (name, size, currPlayers)=>{
-            console.log('someone joined message received by socket')
+            // console.log('someone joined message received by socket')
             setPlayers(()=>currPlayers)
         })
 

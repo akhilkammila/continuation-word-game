@@ -38,7 +38,7 @@ const MultiPlayerSelector= () => {
         const id = name=='' ? defaultName : name;
         setName(()=>id)
 
-        console.log('trying to emit join room through a socket')
+        // console.log('trying to emit join room through a socket')
         socket.emit("join_room", {room, id} )
 
         setInRoom(true)

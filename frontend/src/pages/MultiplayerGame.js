@@ -46,7 +46,7 @@ const MultiplayerGame = ({room, socket, initialPlayers, startingLetter, name}) =
 
             setGameOver(true)
 
-            console.log("I won lets go!")
+            // console.log("I won lets go!")
         })
     }, [socket])
 
@@ -68,7 +68,7 @@ const MultiplayerGame = ({room, socket, initialPlayers, startingLetter, name}) =
 
     useEffect(()=>{
         socket.on("someone_left", (name, afterPlayers)=>{
-            console.log('received the someone left mesage')
+            // console.log('received the someone left mesage')
             toast({
                 title: name + " left the game",
                 description: 'reset the game',
@@ -128,7 +128,7 @@ const MultiplayerGame = ({room, socket, initialPlayers, startingLetter, name}) =
                 )
                 data = data.sort((a,b) => a.word.length - b.word.length);
 
-                console.log(data)
+                // console.log(data)
 
                 // If the player ends the word OR there are no possible words left
                 if(data.length==0){
@@ -160,7 +160,7 @@ const MultiplayerGame = ({room, socket, initialPlayers, startingLetter, name}) =
             position: 'top',
             isClosable: true,
         })
-        console.log('lost :(')
+        // console.log('lost :(')
     }
 
     function reset(){
